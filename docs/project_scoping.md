@@ -98,18 +98,17 @@
    |Tipo de Análisis|Clasificación|
    |Propósito del análisis|Predecir si una llamada al C5 para reportar un inicidente vial es falsa o no|
    |¿Qué acción será informada por este análisis?|El envío de una ambulancia a la ubicación del incidente vial|
-   |¿Cómo se validará el análisis utilizando datos existentes? <br/><br/>  ¿Qué metodología y métricas se utilizarán?|Empleando un set de validación del modelo de clasificación a partir de los datos históricos reportados por la C5|
+   |¿Cómo se validará el análisis utilizando datos existentes? <br/><br/>  ¿Qué metodología y métricas se utilizarán?|Empleando un set de prueba para evaluar el modelo de clasificación a partir de los datos históricos reportados por la C5|
    <br/>
 
 8. **Consideraciones éticas**<br/><br/>
 
-
    | Consideración | Descripción|
    |------|--------|
-   |**Privacidad** <br/><br/> ¿Se trabaja con datos personales y/o sensibles que pueden ser individualmente indentificables? <br/><br/>Mencionarlos||
+   |**Privacidad** <br/><br/> ¿Se trabaja con datos personales y/o sensibles que pueden ser individualmente indentificables? <br/><br/>Mencionarlos| A partir del set de datos reportados por C5 no, pero fácilmente el proyecto podría involucrar números de placas y por ende atribuir la propiedad del carro a una persona física o moral e inclusive determinar una dirección para el propietario.|
    |**Transparencia** <br/><br/> ¿Qué stakeholders deben estar informados sobre qué partes del proyecto?||
-   |**Discriminación/Equidad** <br/><br/> ¿Existen grupos específicos para quienes se busca asegurar equidad en los resultados?||
-   |**Licencia Social** <br/><br/> Si toda la población del país se enterara del proyecto, ¿estarían de acuerdo con él? ¿Por qué?||
+   |**Discriminación/Equidad** <br/><br/> ¿Existen grupos específicos para quienes se busca asegurar equidad en los resultados?|En este aspecto no existen grupos éticos y minorías que se vean directamente afectados por dichas condiciones, pero es de suma importancia verificar que el modelo no se encuentre sesgado de ninguna manera ya que esto implicaría por un lado un uso ineficiente de los recursos, pero por otra parte, y quizás más importante, negarle un servicio de salud a una porción de la población.|
+   |**Licencia Social** <br/><br/> Si toda la población del país se enterara del proyecto, ¿estarían de acuerdo con él? ¿Por qué?| Sí, porque forma parte del sentido común saber que la llegada oportuna de una ambulancia reduce significativamente el riesgo de repercusiones que afecten la calidad de vida a largo plazo. Además también es conocido el problema que las llamadas de broma y falsas alarmas representan para la eficiencia de los servicios de emergencia de la CDMX.|
    |**Responsabilidad** <br/><br/> ¿Quiénes son las personas responsables por todo lo establecido anteriormente?||
    |**Otras consideraciones** como consentimiento, leyes, etc.||
    <br/>
@@ -119,7 +118,6 @@
 
 10. **¿Quiénes son las organizaciones externas y los departamentos internos que deben estar involucrados?**<br/><br/>
 
-|Organización/Departamento|Descripción del involucramiento deseado|Nombre / Rol de Contraparte|
-|-------------------------|---------------------------------------|---------------------------|
-||||
-
+   |Organización/Departamento|Descripción del involucramiento deseado|Nombre / Rol de Contraparte|
+   |-------------------------|---------------------------------------|---------------------------|
+   ||||
