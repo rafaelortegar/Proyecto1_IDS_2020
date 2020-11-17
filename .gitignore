@@ -150,3 +150,10 @@ dmypy.json
 *.shp
 *.dbf
 *RESAGEBURB_09TXT10.txt
+.idea/misc.xml
+.idea/modules.xml
+.idea/Proyecto1_IDS_2020.iml
+.idea/vcs.xml
+.idea/workspace.xml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/inspectionProfiles/Project_Default.xml
