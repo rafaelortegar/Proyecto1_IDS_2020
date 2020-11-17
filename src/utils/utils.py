@@ -25,5 +25,5 @@ def save_df(df, path):
     """
     outfile = open(path, 'wb')
     pickle.dump(df, outfile)
-    outfile.close
+    outfile.close()
  
