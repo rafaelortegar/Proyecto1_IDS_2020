@@ -1,7 +1,7 @@
 import pickle
 
 
-def load_path(path):
+def load_df(path):
     """Loads and returns an object from a pickle file in path
 
     Parameters:
