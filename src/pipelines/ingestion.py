@@ -1,16 +1,5 @@
-from src.utils import save_df
+from utils import save_df
 import pandas as pd
-
-def save_df(df, path):
-    """Saves an object as a pickle file in path
-
-    Parameters:
-    df (object): Object to store in pickle file
-    path (string): Path where the pickle file should reside
-    """
-    outfile = open(path, 'wb')
-    pickle.dump(df, outfile)
-    outfile.close()
 
 
 def ingest_file(path):
