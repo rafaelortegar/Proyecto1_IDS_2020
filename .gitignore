@@ -157,3 +157,4 @@ dmypy.json
 .idea/workspace.xml
 .idea/inspectionProfiles/profiles_settings.xml
 .idea/inspectionProfiles/Project_Default.xml
+/jalr_tests/jalr_geda.ipynb
