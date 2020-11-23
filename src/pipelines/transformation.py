@@ -1,4 +1,6 @@
-from src.utils import load_df, save_df
+import os, sys
+sys.path.insert(0, os.path.abspath(".."))
+from src.utils.utils import load_df, save_df
 
 
 def load_ingestion(path):

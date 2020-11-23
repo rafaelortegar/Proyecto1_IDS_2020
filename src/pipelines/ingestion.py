@@ -1,5 +1,8 @@
-from src.utils import save_df
 import pandas as pd
+
+import os, sys
+sys.path.insert(0, os.path.abspath(".."))
+from src.utils.utils import save_df
 
 
 def ingest_file(path):
