@@ -112,45 +112,7 @@ def CreaTablaConteoPorcentaje_sin_stringformat(df, nomColumna, booleanNA):
     return df_resultado
 
 
-def filtraCDMX(df):
 
-    """
-    Esta función filtra la tabla original, manteniendo solamente la base de datos apra las alcaldías de la CDMX.
-
-    ==========
-    * Args:
-      - df: el data frame completo.
-    * Return:
-      - Data Frame: entrega el data filtrado para la CDMX.
-    ==========
-    Ejemplo:
-      >>df = filtraCDMX(df)
-
-    """
-    # Nombres de alcaldías extraídas de https://datos.cdmx.gob.mx/explore/dataset/alcaldias/table/?location=10,19.32072,-99.15261
-    alcaldias_cdmx = ['COYOACAN',
-     'MIGUEL HIDALGO',
-     'LA MAGDALENA CONTRERAS',
-     'TLAHUAC',
-     'AZCAPOTZALCO',
-     'IZTACALCO',
-     'ALVARO OBREGON',
-     'XOCHIMILCO',
-     'VENUSTIANO CARRANZA',
-     'TLALPAN',
-     'CUAJIMALPA DE MORELOS',
-     'CUAUHTEMOC',
-     'IZTAPALAPA',
-     'MILPA ALTA',
-     'BENITO JUAREZ',
-     'GUSTAVO A MADERO']
-    df_resultado = pd.DataFrame()
-
-    for alcaldia in alcaldias_cdmx:
-        df_alc=df.loc[df["alcaldia_hechos"] == alcaldia]
-        df_resultado = df_resultado.append(df_alc)
-
-    return df_resultado
 
 
 def StringLowercase(df):

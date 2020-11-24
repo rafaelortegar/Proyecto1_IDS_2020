@@ -9,10 +9,12 @@ from src.pipelines.feature_engineering import feature_engineering
 # paths
 csv_path = '../data/incidentes-viales-c5.csv'
 ingestion_pickle_path = '../output/ingest_df.pkl'
+transformation_pickle_path = '../output/transformation_df.pkl'
 
 
 def main():
     ingest(csv_path, ingestion_pickle_path)
+    transform(ingestion_pickle_path, ingestion_pickle_path)
 
 
 if __name__ == '__main__':
