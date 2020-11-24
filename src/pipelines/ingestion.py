@@ -36,7 +36,6 @@ def generate_label(df):
 
 def drop_cols(df):
     """Drops unused columns from passed dataframe. The variables that are eliminated are:
-        - folio
         - codigo_cierre
         - fecha_cierre
         - año_cierre
@@ -51,7 +50,7 @@ def drop_cols(df):
     Parameters:
         df (dataframe)
     """
-    dropped_columns = ['folio', 'codigo_cierre', 'fecha_cierre', 'año_cierre', 'mes_cierre', 'hora_cierre',
+    dropped_columns = ['codigo_cierre', 'fecha_cierre', 'año_cierre', 'mes_cierre', 'hora_cierre',
                        'latitud', 'longitud', 'clas_con_f_alarma', 'delegacion_cierre', 'geopoint']
     df.drop(dropped_columns, axis='columns', inplace=True)
 

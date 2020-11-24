@@ -1,6 +1,11 @@
 import os, sys
+import pandas as pd
+import numpy as np
+import datetime
+
 sys.path.insert(0, os.path.abspath(".."))
 from src.utils.utils import load_df, save_df
+from src.utils.clean import clean_df
 
 
 def load_ingestion(path):
@@ -22,18 +27,18 @@ def date_transformation(col, df):
             else:
                 string_correccion_mes = str(mes)
 
-                for dia in range(1, 32):
-                    elemento = dia
+            for dia in range(1, 32):
+                elemento = dia
 
-                    if(elemento<10):
-                        string_correccion = '0'+str(dia)+'/'+string_correccion_mes+'/'+string_correccion_ano
-                        string_correcto = '0'+str(dia)+'/'+string_correccion_mes+'/20'+string_correccion_ano
-                    else:
-                        string_correccion = str(dia)+'/'+string_correccion_mes+'/'+string_correccion_ano
-                        string_correcto = str(dia)+'/'+string_correccion_mes+'/20'+string_correccion_ano
+                if(elemento<10):
+                    string_correccion = '0'+str(dia)+'/'+string_correccion_mes+'/'+string_correccion_ano
+                    string_correcto = '0'+str(dia)+'/'+string_correccion_mes+'/20'+string_correccion_ano
+                else:
+                    string_correccion = str(dia)+'/'+string_correccion_mes+'/'+string_correccion_ano
+                    string_correcto = str(dia)+'/'+string_correccion_mes+'/20'+string_correccion_ano
 
-                        #print(string_correccion)
-                        df.loc[df[col] == string_correccion, col] = string_correcto
+                #print(string_correccion)
+                df.loc[df[col] == string_correccion, col] = string_correcto
 
     # Convertir columna en datetime
     df[col]=pd.to_datetime(df[col], format='%d/%m/%Y')
@@ -64,13 +69,13 @@ def fixing_hours(col, df):
     dataframe_hrcorregida[col] = dataframe_hrcorregida[col_corregida]
     df = df.append(dataframe_hrcorregida)
     df.drop_duplicates(keep='last',subset=['folio'],inplace = True)
-
+    df.drop(['folio',col_corregida], axis='columns', inplace=True)
     return df
 
 
 def generate_hora_decimal(df):
     df['hora_decimal'] = df['hora_creacion'].str.split(':', expand=False)
-    df['hora_decimal'] = df['hora_decimal'].apply(lambda x: int(x[0]) + int(x[1]) / 60 + int(x[2]) / 3600)
+    df['hora_decimal'] = df['hora_decimal'].apply(lambda x: int(x[0]))# + int(x[1]) / 60 + int(x[2]) / 3600)
     return df
 
 def generate_hora_ciclica(df):
@@ -123,8 +128,8 @@ def save_transformation(df, path):
 
 def transform(input_path,output_path):
     df = load_ingestion(input_path)
-    df = date_transformation(df,'fecha_creacion')
-    df = fixing_hours(df,'hora_creacion')
+    df = date_transformation('fecha_creacion',df)
+    df = fixing_hours('hora_creacion',df)
 
     #integer_columns = ['mes']
     df = integer_transformation('mes',df)
@@ -138,5 +143,7 @@ def transform(input_path,output_path):
     df = cyclic_transformation(df)
 
     df = impute_delegacion_inicio(df)
+
+    df = clean_df(df)
 
     save_transformation(df, output_path)

@@ -14,8 +14,8 @@ transformation_pickle_path = '../output/transformation_df.pkl'
 
 def main():
     ingest(csv_path, ingestion_pickle_path)
-    transform(ingestion_pickle_path, ingestion_pickle_path)
-
+    transform(ingestion_pickle_path, transformation_pickle_path)
+    
 
 if __name__ == '__main__':
     main()
