@@ -15,6 +15,7 @@ def ingest_file(path):
         dataframe
     """
     df = pd.read_csv(path)
+
     return df
 
 
@@ -29,6 +30,8 @@ def generate_label(df):
     df['label'] = df['codigo_cierre'].str.split(' ', n=1, expand=False)
     df['label'] = df['label'].apply(lambda x: x[0][1])
     df['label'] = df['label'].apply(lambda x: 1 if x == 'F' or x == 'N' else 0)
+
+    return df
 
 
 def drop_cols(df):
@@ -50,6 +53,8 @@ def drop_cols(df):
                        'clas_con_f_alarma', 'delegacion_cierre', 'geopoint']
     df.drop(dropped_columns, axis='columns', inplace=True)
 
+    return df
+
 
 def save_ingestion(df, path):
     save_df(df, path)
@@ -57,6 +62,6 @@ def save_ingestion(df, path):
 
 def ingest(input_path, output_path):
     df = ingest_file(input_path)
-    generate_label(df)
-    drop_cols(df)
+    df = generate_label(df)
+    df = drop_cols(df)
     save_ingestion(df, output_path)
