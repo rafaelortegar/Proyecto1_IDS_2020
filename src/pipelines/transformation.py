@@ -105,10 +105,6 @@ def cyclic_transformation(df):
 
     return df
 
-
-def save_transformation(df, path):
-    save_df(df, path)
-
 def impute_latitud(df):
     df = df[df.latitud.notna()]
     return df
@@ -122,6 +118,8 @@ def impute_delegacion_inicio(df):
     df['delegacion_inicio'].fillna(mode, inplace=True)
     return df
 
+def save_transformation(df, path):
+    save_df(df, path)
 
 def transform(input_path,output_path):
     df = load_ingestion(input_path)
@@ -138,5 +136,7 @@ def transform(input_path,output_path):
 
     #float_columns = []
     df = cyclic_transformation(df)
+
+    df = impute_delegacion_inicio(df)
 
     save_transformation(df, output_path)
