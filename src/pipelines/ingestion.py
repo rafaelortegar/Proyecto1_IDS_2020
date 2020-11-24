@@ -1,5 +1,7 @@
 import pandas as pd
 
+from sklearn.model_selection import train_test_split
+
 import os, sys
 sys.path.insert(0, os.path.abspath(".."))
 from src.utils.utils import save_df
@@ -61,8 +63,20 @@ def save_ingestion(df, path):
     save_df(df, path)
 
 
-def ingest(input_path, output_path):
+def ingest(input_path, output_path_train,output_path_test):
     df = ingest_file(input_path)
     df = generate_label(df)
     df = drop_cols(df)
-    save_ingestion(df, output_path)
+    etiqueta = df['label']
+    features = df.copy()
+    features.drop(columns = 'label', inplace = True)
+    X_train, X_test, y_train, y_test = train_test_split(etiqueta, features)
+
+    train = y_train.copy()
+    train['etiqueta'] = X_train
+
+    test =y_test.copy()
+    test['etiqueta'] = X_test
+
+    save_ingestion(train, output_path_train)
+    save_ingestion(test, output_path_test)
