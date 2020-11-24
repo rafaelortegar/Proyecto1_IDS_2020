@@ -42,6 +42,8 @@ def drop_cols(df):
         - año_cierre
         - mes_cierre
         - hora_cierre
+        - latitud
+        - longitud
         - clas_con_f_alarma
         - delegacion_cierre
         - geopoint
@@ -50,7 +52,7 @@ def drop_cols(df):
         df (dataframe)
     """
     dropped_columns = ['folio', 'codigo_cierre', 'fecha_cierre', 'año_cierre', 'mes_cierre', 'hora_cierre',
-                       'clas_con_f_alarma', 'delegacion_cierre', 'geopoint']
+                       'latitud', 'longitud', 'clas_con_f_alarma', 'delegacion_cierre', 'geopoint']
     df.drop(dropped_columns, axis='columns', inplace=True)
 
     return df
