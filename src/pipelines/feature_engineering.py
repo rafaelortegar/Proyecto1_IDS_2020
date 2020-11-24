@@ -84,12 +84,14 @@ def feature_generation(df):
 
 
 def feature_selection(df):
+    print(df.columns)
     df = df.astype({"label":'category'})
     X = df.copy()
-    y = X.label.values.reshape(df.shape[0],)
+    y = X.label.values#.reshape(df.shape[0],)
     columnas_quitar = ['label','timestamp_creacion','fecha_creacion','hora_creacion','dia_semana','tipo_entrada']
     X.drop(columns = columnas_quitar,inplace = True)
 
+    print('comienza modelado de feature selection:')
     # ocuparemos un RF
     classifier = RandomForestClassifier(oob_score=True, random_state=1234)
 

@@ -73,10 +73,10 @@ def ingest(input_path, output_path_train,output_path_test):
     X_train, X_test, y_train, y_test = train_test_split(etiqueta, features)
 
     train = y_train.copy()
-    train['etiqueta'] = X_train
+    train['label'] = X_train
 
     test =y_test.copy()
-    test['etiqueta'] = X_test
+    test['label'] = X_test
 
     save_ingestion(train, output_path_train)
     save_ingestion(test, output_path_test)
