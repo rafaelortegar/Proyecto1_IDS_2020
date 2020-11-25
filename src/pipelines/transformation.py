@@ -121,6 +121,10 @@ def impute_longitud(df):
 def impute_delegacion_inicio(df):
     mode = df.delegacion_inicio.mode()[0]
     df['delegacion_inicio'].fillna(mode, inplace=True)
+    return df, mode
+
+def impute_with_mode(df, col, mode):
+    df[col].fillna(mode, inplace=True)
     return df
 
 def save_transformation(df, path):
@@ -142,7 +146,7 @@ def transform(input_path,output_path):
     #float_columns = []
     df = cyclic_transformation(df)
 
-    df = impute_delegacion_inicio(df)
+    df, mode_delegacion = impute_delegacion_inicio(df)
 
     df = clean_df(df)
 
