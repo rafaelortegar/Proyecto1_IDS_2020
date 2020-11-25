@@ -112,9 +112,6 @@ def CreaTablaConteoPorcentaje_sin_stringformat(df, nomColumna, booleanNA):
     return df_resultado
 
 
-
-
-
 def StringLowercase(df):
     """
     Función cambiar todos los strings de un dataframe a lowercase
@@ -330,12 +327,12 @@ def genera_profiling_de_numericos(df,lista_numericas,vars_type):
         >>perfilamiento_de_numericas = genera_profiling_de_numericos(df,lista_numericas,vars_type)
     """
     # Obtenemos los estadísticos de la columna si es numérica
-    lista_perfilamiento_numerico = ['tipo','numero de observaciones', 'media', 'desviacion estándar',
-                                    'cuartil 25%','cuartil 50%','cuartil 75%','minimo','maximo',
-                                    'numero de observaciones unicas','numero de faltantes','top1/veces/porcentaje',
-                                    'top2/veces/porcentaje','top3/veces/porcentaje'
-                                    ,'top4/veces/porcentaje','top3/veces/porcentaje']
-    datos_dataframe_profiling_numericas = {'metrica':lista_perfilamiento_numerico}
+    lista_perfilamiento_numerico = ['Tipo','Número de observaciones', 'Media', 'Desviación estándar',
+                                    'Cuartil 25%','Cuartil 50%','Cuartil 75%','Mínimo','Máximo',
+                                    'Número de observaciones únicas','Número de faltantes','Top1/veces/%',
+                                    'Top2/veces/%','Top3/veces/%'
+                                    ,'Top4/veces/%','Top5/veces/%']
+    datos_dataframe_profiling_numericas = {'Métrica':lista_perfilamiento_numerico}
     dataframe_profiling_numericas = pd.DataFrame(data=datos_dataframe_profiling_numericas)
     for col in lista_numericas:
         # tipo de dato
@@ -348,39 +345,39 @@ def genera_profiling_de_numericos(df,lista_numericas,vars_type):
         # Obtenemos las métricas relevantes
         descr_col = df[col].describe()
         descr_col = pd.DataFrame(descr_col)
-        descr_col['metrica']=descr_col.index
-        descr_col.columns=['valor','metrica']
+        descr_col['Métrica']=descr_col.index
+        descr_col.columns=['valor','Métrica']
 
         # número de observaciones
         medida = 'count'
-        metrica = descr_col.loc[descr_col["metrica"] == medida]
+        metrica = descr_col.loc[descr_col["Métrica"] == medida]
         num_observaciones_num = metrica['valor'][0]
         #print(num_observaciones_num)
 
         # media
         medida = 'mean'
-        metrica = descr_col.loc[descr_col["metrica"] == medida]
+        metrica = descr_col.loc[descr_col["Métrica"] == medida]
         media_obs_num = metrica['valor'][0]
         media_obs_num = media_obs_num.round(2)
         #print(media_obs_num)
 
         # desviacion estándar
         medida = 'std'
-        metrica = descr_col.loc[descr_col["metrica"] == medida]
+        metrica = descr_col.loc[descr_col["Métrica"] == medida]
         sd_obs_num = metrica['valor'][0]
         sd_obs_num = sd_obs_num.round(2)
         #print(sd_obs_num)
 
         # cuartil 25
         medida = '25%'
-        metrica = descr_col.loc[descr_col["metrica"] == medida]
+        metrica = descr_col.loc[descr_col["Métrica"] == medida]
         cuant_25_obs_num = metrica['valor'][0]
         cuant_25_obs_num = cuant_25_obs_num.round(2)
         #print(cuant_25_obs_num)
 
         # cuartil 50
         medida = '50%'
-        metrica = descr_col.loc[descr_col["metrica"] == medida]
+        metrica = descr_col.loc[descr_col["Métrica"] == medida]
         cuant_50_obs_num = metrica['valor'][0]
         cuant_50_obs_num = cuant_50_obs_num.round(2)
         #print(cuant_50_obs_num)
@@ -389,7 +386,7 @@ def genera_profiling_de_numericos(df,lista_numericas,vars_type):
 
         # cuartil 75
         medida = '75%'
-        metrica = descr_col.loc[descr_col["metrica"] == medida]
+        metrica = descr_col.loc[descr_col["Métrica"] == medida]
         cuant_75_obs_num = metrica['valor'][0]
         cuant_75_obs_num = cuant_75_obs_num.round(2)
         #print(cuant_75_obs_num)
@@ -398,14 +395,14 @@ def genera_profiling_de_numericos(df,lista_numericas,vars_type):
 
         # minimo
         medida = 'min'
-        metrica = descr_col.loc[descr_col["metrica"] == medida]
+        metrica = descr_col.loc[descr_col["Métrica"] == medida]
         minimo_obs_num = metrica['valor'][0]
         minimo_obs_num = minimo_obs_num.round(2)
         #print(minimo_obs_num)
 
         # maximo
         medida = 'max'
-        metrica = descr_col.loc[descr_col["metrica"] == medida]
+        metrica = descr_col.loc[descr_col["Métrica"] == medida]
         maximo_obs_num = metrica['valor'][0]
         maximo_obs_num = maximo_obs_num.round(2)
         #print(maximo_obs_num)
@@ -548,7 +545,7 @@ def genera_profiling_general(df):
     #print(cantidad_numericas)
 
     ## Fechas
-    cantidad_fecha = len(vars_type.loc[vars_type["tipo"] == "Date"])
+    cantidad_fecha = len(vars_type.loc[vars_type["tipo"] == "datetime64[ns]"])
     #print(cantidad_fecha)
 
     ## Categoricas
@@ -578,7 +575,7 @@ def genera_profiling_general(df):
     #print(porcentaje_de_duplicados)
 
     estadisticas = ['Total de variables','Conteo de observaciones','Total de celdas',
-                        'Cantidad de variables numericas','Cantidad de variables de fecha',
+                        'Cantidad de variables numéricas','Cantidad de variables de fecha',
                         'Cantidad de variables categóricas', 'Cantidad de variables de texto',
                         'Valores faltantes','Porcentaje de valores faltantes',
                         'Renglones duplicados', 'Porcentaje de valores duplicados']
@@ -587,7 +584,7 @@ def genera_profiling_general(df):
                         cantidad_fecha,cantidad_categoricas,cantidad_texto,nulos_totales,nulos_porcentaje,
                         numero_de_duplicados,porcentaje_de_duplicados]
 
-    valores = {'Estadisticas':estadisticas,'Resultado':valores_estadisticas}
+    valores = {'Estadísticas':estadisticas,'Resultado':valores_estadisticas}
 
     df_perfilamiento_general = pd.DataFrame(data=valores)
     return df_perfilamiento_general
@@ -613,44 +610,41 @@ def genera_profiling_de_categorias(df, lista_category,vars_type):
         >>profiling_de_categorias = genera_profiling_de_categorias(df,lista_category,vars_type)
     """
     # Obtenemos los estadísticos de la columna si es catagorica
-    lista_perfilamiento_categorico = ['tipo','numero de categorias', 'numero de observaciones',
-                                      'observaciones nulas','% observaciones nulas', 'valores unicos',
-                                      'moda1/veces/porcentaje','moda2/veces/porcentaje','moda3/veces/porcentaje']
-    datos_dataframe_profiling_categoricos = {'metrica':lista_perfilamiento_categorico}
+    lista_perfilamiento_categorico = ['Tipo','Número de categorías', 'Número de observaciones',
+                                      'Observaciones nulas','% Observaciones nulas', 'Valores únicos',
+                                      'Moda1/veces/%','Moda2/veces/%','Moda3/veces/%']
+    datos_dataframe_profiling_categoricos = {'Métrica':lista_perfilamiento_categorico}
     dataframe_profiling_categoricas = pd.DataFrame(data=datos_dataframe_profiling_categoricos)
     for col in lista_category:
-        # tipo de dato
+        #Tipo de dato
         vars_type_cat = pd.DataFrame(vars_type)
+        
         #vars_type_cat
         df_tipo = pd.DataFrame(data=vars_type_cat.loc[vars_type_cat["variable"] == col])
         tipo_dato=df_tipo['tipo'][0]
 
-        # Obtenemos las métricas relevantes
+        #Obtenemos las métricas relevantes
         descr_col = df[col]
         descr_col = pd.DataFrame(descr_col)
         descr_col['metrica']=descr_col.index
-        descr_col.columns=['valor','metrica']
+        descr_col.columns=['valor','Métrica']
 
         #Numero de categorias
-
         num_categorias=descr_col.nunique()["valor"]
 
         #Numero de observaciones
-
         num_observaciones=len(descr_col)
 
         #Valores nulos
-
         num_obs_nulas=df[col].isna().sum()
 
         #%Valores nulos
-
         por_obs_nulas=num_obs_nulas/num_observaciones
 
-        # valor de las categorias
+        #Valor de las categorias
         valores_unicos = list(df[col].unique())
 
-        # generamos tabla para las modas
+        #Generamos tabla para las modas
         tabla_importantes = CreaTablaConteoPorcentaje(df,str(col),True)
         tabla_importantes.columns = ['conteo','porcentaje']
 
@@ -695,33 +689,31 @@ def genera_profiling_de_texto(df,lista_texto,vars_type):
         >>profiling_de_texto = genera_profiling_de_texto(df,lista_texto,vars_type)
     """
     # Obtenemos los estadísticos de la columna si es catagorica
-    lista_perfilamiento_txt = ['tipo','numero de observaciones', 'observaciones unicas', '% observaciones unicas',
-                                    'tamano promedio','tamano minmo','tamano maximo']
-    datos_dataframe_profiling_txt = {'metrica':lista_perfilamiento_txt}
+    lista_perfilamiento_txt = ['Tipo','Número de observaciones', 'Observaciones únicas', '% Observaciones únicas',
+                                    'Tamaño promedio','Tamaño mínimo','Tamaño máximo']
+    datos_dataframe_profiling_txt = {'Métrica':lista_perfilamiento_txt}
     dataframe_profiling_txt = pd.DataFrame(data=datos_dataframe_profiling_txt)
     for col in lista_texto:
-        # tipo de dato
+        #tipo de dato
         vars_type_txt = pd.DataFrame(vars_type)
+        
         #vars_type_txt
         df_tipo = pd.DataFrame(data=vars_type_txt.loc[vars_type_txt["variable"] == col])
         tipo_dato=df_tipo['tipo'][0]
 
-        # Obtenemos las métricas relevantes
+        #Obtenemos las métricas relevantes
         descr_col = df[col]
         descr_col = pd.DataFrame(descr_col)
-        descr_col['metrica']=descr_col.index
-        descr_col.columns=['valor','metrica']
+        descr_col['Métrica']=descr_col.index
+        descr_col.columns=['valor','Métrica']
 
         #Numero de observaciones
-
         num_observaciones=len(descr_col)
 
         #Observaciones unicas
-
         num_obs_unicas=df[col].nunique()
 
         #%Observaciones nulas
-
         por_obs_unicas=num_obs_unicas/num_observaciones
 
         #%Tamaño promedio
@@ -740,6 +732,69 @@ def genera_profiling_de_texto(df,lista_texto,vars_type):
         dataframe_profiling_txt[col]=datos_variable
     return dataframe_profiling_txt
 
+def genera_profiling_de_fechas(df,lista_date,vars_type):
+    """
+    """
+    # Obtenemos los estadísticos de la columna si es fecha
+    lista_perfilamiento_fechas = ['Tipo','Número de observaciones', 'Mínimo','Máximo',
+                                    'Número de observaciones únicas','Número de faltantes','Top1/veces/%',
+                                    'Top2/veces/%','Top3/veces/%']
+    
+    datos_dataframe_profiling_fechas = {'Métrica':lista_perfilamiento_fechas}
+    dataframe_profiling_fechas = pd.DataFrame(data = datos_dataframe_profiling_fechas)
+    
+    for col in lista_date:
+        # tipo de dato
+        vars_type_fechas = pd.DataFrame(vars_type)
+        
+        # vars_type
+        df_tipo = pd.DataFrame(data = vars_type_fechas.loc[vars_type_fechas["variable"] == col])
+        tipo_dato = df_tipo['tipo'][0]
+
+        # número de observaciones
+        num_observaciones = df[col].count()
+
+        # minimo
+        minimo_obs = df[col].min()
+
+        # maximo
+        maximo_obs = df[col].max()
+        
+        # numero de observaciones unicas
+        num_obs_unicas = df[col].nunique()
+
+        # Número de observaciones con valores faltantes
+        obs_faltantes = df[col].isna().sum()
+
+        # generamos tabla para las modas
+        tabla_importantes = CreaTablaConteoPorcentaje(df,str(col),True)
+        tabla_importantes.columns = ['conteo','porcentaje']
+
+        top1 = tabla_importantes.index[0]
+        veces1 = list(tabla_importantes['conteo'])[0]
+        porcentaje1 = list(tabla_importantes['porcentaje'])[0]
+        datos_top1 = [top1,veces1,porcentaje1]
+
+        if(len(tabla_importantes)>1):
+            top2 = tabla_importantes.index[1]
+            veces2 = list(tabla_importantes['conteo'])[1]
+            porcentaje2 = list(tabla_importantes['porcentaje'])[1]
+            datos_top2 = [top2,veces2,porcentaje2]
+        else:
+            datos_top2 = ['N/A','N/A','N/A']
+
+        if(len(tabla_importantes)>2):
+            top3 = tabla_importantes.index[2]
+            veces3 = list(tabla_importantes['conteo'])[2]
+            porcentaje3 = list(tabla_importantes['porcentaje'])[2]
+            datos_top3 = [top3,veces3,porcentaje3]
+        else:
+            datos_top3 = ['N/A','N/A','N/A']
+            
+        datos_variable = [tipo_dato, num_observaciones, minimo_obs, maximo_obs,
+                          num_obs_unicas, obs_faltantes, datos_top1, datos_top2, datos_top3]
+        dataframe_profiling_fechas[col] = datos_variable
+    return dataframe_profiling_fechas
 
 def genera_profiling_por_variable(df):
     """
@@ -759,7 +814,7 @@ def genera_profiling_por_variable(df):
     # Dividimos variables por tipo de datos
     vars_type = df.dtypes
     vars_type = pd.DataFrame(vars_type, columns = ['tipo'])
-    vars_type['variable']=vars_type.index
+    vars_type['variable'] = vars_type.index
 
     # variables numericas
     variables_int = vars_type.loc[vars_type["tipo"] == "int64"]
@@ -768,7 +823,7 @@ def genera_profiling_por_variable(df):
     lista_numericas = list(variables_numericas['variable'])
 
     # variables fecha
-    variables_date = vars_type.loc[vars_type["tipo"] == "Date"]
+    variables_date = vars_type.loc[vars_type["tipo"] == 'datetime64[ns]']
     lista_date = list(variables_date['variable'])
 
     # variables categoricas
@@ -793,5 +848,10 @@ def genera_profiling_por_variable(df):
         profiling_texto = "No hay variables de tipo texto"
     else:
         profiling_texto = genera_profiling_de_texto(df,lista_texto,vars_type)
+        
+    if len(lista_date)==0:
+        profiling_fechas = "No hay variables de fecha"
+    else:
+        profiling_fechas = genera_profiling_de_fechas(df,lista_date,vars_type)
 
-    return (profiling_numericas,profiling_categoricas,profiling_texto)
+    return (profiling_numericas,profiling_categoricas,profiling_texto,profiling_fechas)
