@@ -119,12 +119,14 @@ def impute_longitud(df):
     return df
 
 def impute_delegacion_inicio(df):
+    # esta es para el train
     mode = df.delegacion_inicio.mode()[0]
     df['delegacion_inicio'].fillna(mode, inplace=True)
     return df, mode
 
-def impute_with_mode(df, col, mode):
-    df[col].fillna(mode, inplace=True)
+def impute_with_value(df, col, value):
+    # esta es para el test
+    df[col].fillna(value, inplace=True)
     return df
 
 def save_transformation(df, path):
