@@ -100,9 +100,9 @@ def feature_selection(df):
     # hyper_param_grid = {'n_estimators': [100, 500, 800, 1000],
     #                     'max_depth': [1, 5, 10, 20, 50],
     #                     'min_samples_split': [2, 5, 10]}
-    hyper_param_grid = {'n_estimators': [100,500],
+    hyper_param_grid = {'n_estimators': [100],
                     'max_depth': [2,5,10],
-                    'min_samples_split': [2], 'max_features':[10,20]
+                    'min_samples_split': [2], 'max_features':[10]
                     }
     tscv = TimeSeriesSplit(max_train_size=None, n_splits=3)
 
