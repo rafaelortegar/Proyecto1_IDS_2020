@@ -1,6 +1,8 @@
 # Proyecto1_IDS_2020
 Repositorio para el primer proyecto de IDS
 
+**Nota:** Para poder correr de forma correcta los scripts o los notebooks, es importante descargar el csv de dropbox y colocarlo en la carpeta `data`
+
 **Profesor:** Liliana Millán Núñez
 
 **Integrantes del equipo**
