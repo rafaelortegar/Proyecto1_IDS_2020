@@ -1,6 +1,7 @@
 import os, sys
 import pandas as pd
 import numpy as np
+from sklearn.model_selection import TimeSeriesSplit
 
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
@@ -103,10 +104,12 @@ def feature_selection(df):
                     'max_depth': [2,5,10],
                     'min_samples_split': [2], 'max_features':[10,20]
                     }
+    tscv = TimeSeriesSplit(max_train_size=None, n_splits=3)
+
     gs = GridSearchCV(classifier,
                            hyper_param_grid,
                            scoring = 'precision',
-                           cv = 5,
+                           cv = tscv,
                            n_jobs = -1,return_train_score= True, verbose = True )
 
     gs.fit(X, y)

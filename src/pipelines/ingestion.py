@@ -1,6 +1,8 @@
 import pandas as pd
-
+import datetime
 from sklearn.model_selection import train_test_split
+
+
 
 import os, sys
 sys.path.insert(0, os.path.abspath(".."))
@@ -63,20 +65,52 @@ def save_ingestion(df, path):
     save_df(df, path)
 
 
-def ingest(input_path, output_path_train,output_path_test):
+def date_transformation(col, df):
+    # arreglamos los strings de fechas
+    # fix Dates
+    # 31/02/19 --> 31/02/2019
+    for ano in range(2013,2021):
+        string_correccion_ano = str(ano)
+        string_correccion_ano=string_correccion_ano[-2:]
+        print(string_correccion_ano)
+
+        for mes in range (1,13):
+            if(mes<10):
+                string_correccion_mes = '0'+str(mes)
+            else:
+                string_correccion_mes = str(mes)
+
+            for dia in range(1, 32):
+                elemento = dia
+
+                if(elemento<10):
+                    string_correccion = '0'+str(dia)+'/'+string_correccion_mes+'/'+string_correccion_ano
+                    string_correcto = '0'+str(dia)+'/'+string_correccion_mes+'/20'+string_correccion_ano
+                else:
+                    string_correccion = str(dia)+'/'+string_correccion_mes+'/'+string_correccion_ano
+                    string_correcto = str(dia)+'/'+string_correccion_mes+'/20'+string_correccion_ano
+
+                #print(string_correccion)
+                df.loc[df[col] == string_correccion, col] = string_correcto
+
+    # Convertir columna en datetime
+    df[col]=pd.to_datetime(df[col], format='%d/%m/%Y')
+
+    return df
+
+def ingest(input_path, output_path):
     df = ingest_file(input_path)
     df = generate_label(df)
     df = drop_cols(df)
-    etiqueta = df['label']
-    features = df.copy()
-    features.drop(columns = 'label', inplace = True)
-    X_train, X_test, y_train, y_test = train_test_split(etiqueta, features)
+    #print("Arreglando fechas...")
+    #df = date_transformation('fecha_creacion',df)
 
-    train = y_train.copy()
-    train['label'] = X_train
+    #X_train, X_test, y_train, y_test = train_test_split(etiqueta, features)
 
-    test =y_test.copy()
-    test['label'] = X_test
+    #train = y_train.copy()
+    #train['label'] = X_train
 
-    save_ingestion(train, output_path_train)
-    save_ingestion(test, output_path_test)
+    #test =y_test.copy()
+    #test['label'] = X_test
+
+    save_ingestion(df, output_path)

@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import datetime
 
+
 sys.path.insert(0, os.path.abspath(".."))
 from src.utils.utils import load_df, save_df
 from src.utils.clean import clean_df
@@ -119,22 +120,18 @@ def impute_longitud(df):
     return df
 
 def impute_delegacion_inicio(df):
-    # esta es para el train
     mode = df.delegacion_inicio.mode()[0]
     df['delegacion_inicio'].fillna(mode, inplace=True)
-    return df, mode
-
-def impute_with_value(df, col, value):
-    # esta es para el test
-    df[col].fillna(value, inplace=True)
-    return df
+    return (df,mode)
 
 def save_transformation(df, path):
     save_df(df, path)
 
-def transform(input_path,output_path):
+def transform(input_path,output_path_train,output_path_test):
     df = load_ingestion(input_path)
+    print("Arreglando fechas...")
     df = date_transformation('fecha_creacion',df)
+    print("Arreglando horas...")
     df = fixing_hours('hora_creacion',df)
 
     #integer_columns = ['mes']
@@ -145,11 +142,22 @@ def transform(input_path,output_path):
     for columna in categoric_columns:
         df = categoric_transformation(columna,df)
 
+
     #float_columns = []
     df = cyclic_transformation(df)
 
-    df, mode_delegacion = impute_delegacion_inicio(df)
+    features = df.sort_values('fecha_creacion',ascending = True)
 
+    primeros_indices = round(len(features)*.7)
+    ultimos_indices = len(features)- primeros_indices
+
+    train = features.head(primeros_indices).copy()
+    test = features.tail(ultimos_indices).copy()
+
+    df,moda = impute_delegacion_inicio(train)
+    test['delegacion_inicio'].fillna(moda, inplace=True)
+    test = clean_df(test)
     df = clean_df(df)
 
-    save_transformation(df, output_path)
+    save_transformation(df, output_path_train)
+    save_transformation(test, output_path_test)
