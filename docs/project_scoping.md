@@ -33,10 +33,6 @@
     
 4. **Objetivos:** ¿Cuáles son las metas de negocio/política que serán logradas al resolver este problema y qué restricciones se tiene? (en orden de prioridad).<br/><br/>
 
-   **Concreto, Medible y optimizable** --> Precision: Eficencia. Dar ayuda a los que estamos muy seguros que la necesitan.
-
-   Disminuir los reportes falsos atendidos por ambulancias en la Ciudad de México.
-
    | # | Objetivo                                                                    | Restricciones                                                                        |
    |:-:|-----------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
    | 1 | Mejorar la eficiencia de atención oportuna de los incidentes viales ocurridos en la CDMX  | Sólo se cuentan con 20 ambulancias para responder en caso de que un incidente ocurra |
