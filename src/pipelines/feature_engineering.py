@@ -68,27 +68,30 @@ def feature_generation(df):
     df = rename_incidente_c4(df)
 
     # one hot de delegación e incidente c4
-    transformers = [('one_hot', OneHotEncoder(), ['delegacion_inicio','incidente_c4'])]
+    transformers = [('one_hot', OneHotEncoder(handle_unknown='ignore'), ['delegacion_inicio','incidente_c4'])]
     col_trans = ColumnTransformer(transformers, remainder="passthrough", n_jobs=-1, verbose=True)
     col_trans.fit(df)
+
     output_vars = col_trans.transform(df)
     feature_names=col_trans.get_feature_names()
+
     final_df = pd.DataFrame(output_vars)
     final_df.columns = feature_names
     final_df.columns = final_df.columns.str.replace('one_hot__x0_', '')
     final_df.columns = final_df.columns.str.replace('one_hot__x1_', '')
     final_df.columns = final_df.columns.str.replace(' ', '_')
     final_df.columns = final_df.columns.str.replace('.', '')
+
     df = pd.DataFrame(final_df)
 
-    return df
+    return df, col_trans
 
 
 def feature_selection(df):
     print(df.columns)
     df = df.astype({"label":'category'})
     X = df.copy()
-    y = X.label.values#.reshape(df.shape[0],)
+    y = X.label.values
     columnas_quitar = ['label','timestamp_creacion','fecha_creacion','hora_creacion','dia_semana','tipo_entrada']
     X.drop(columns = columnas_quitar,inplace = True)
 
@@ -96,10 +99,6 @@ def feature_selection(df):
     # ocuparemos un RF
     classifier = RandomForestClassifier(oob_score=True, random_state=1234)
 
-    # definicion de los hiperparametros que queremos probar
-    # hyper_param_grid = {'n_estimators': [100, 500, 800, 1000],
-    #                     'max_depth': [1, 5, 10, 20, 50],
-    #                     'min_samples_split': [2, 5, 10]}
     hyper_param_grid = {'n_estimators': [100,500],
                     'max_depth': [2,5,10],
                     'min_samples_split': [2], 'max_features':[10,20]
@@ -143,16 +142,45 @@ def feature_selection(df):
     return (df_importancias,lista_features,mejor_modelo)
 
 
+def test_fe_pickle_generator(input_path, output_path, col_transformer):
+
+    # cargando data frame the train
+    df = load_df(input_path)
+
+    # generando features comunes
+    df = crea_timestamp(df)
+    df = generate_day_type(df)
+    df = generate_trimestres(df)
+    df = generate_llamada(df)
+    df = rename_incidente_c4(df)
+
+    # generando features obtenidos desde train set
+    output_vars = col_transformer.transform(df)
+    feature_names = col_transformer.get_feature_names()
+
+    # generando df de transformación
+    final_df = pd.DataFrame(output_vars)
+    final_df.columns = feature_names
+    final_df.columns = final_df.columns.str.replace('one_hot__x0_', '')
+    final_df.columns = final_df.columns.str.replace('one_hot__x1_', '')
+    final_df.columns = final_df.columns.str.replace(' ', '_')
+    final_df.columns = final_df.columns.str.replace('.', '')
+
+    # generando pickle test con fe
+    df = pd.DataFrame(final_df)
+    save_df(df, output_path)
+
+
 def save_fe(df, path):
     save_df(df, path)
 
 
-
-def feature_engineering(input_path,output_path):
+def feature_engineering(input_path, output_path, test_input_path, test_output_path):
     df = load_transformations(input_path)
-    df = feature_generation(df)
-    df_importancias,lista_features,mejor_modelo = feature_selection(df)
+    df, col_trans = feature_generation(df)
+    test_fe_pickle_generator(test_input_path, test_output_path, col_trans)
 
-    df = df[lista_features]
+    df_importancias, lista_features, mejor_modelo = feature_selection(df)
+    # df = df[lista_features]
 
     save_df(df, output_path)
