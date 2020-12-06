@@ -139,7 +139,7 @@ def feature_selection(df):
     lista_features = lista_features_a_mantener
     mejor_modelo = gs.best_estimator_
 
-    return (df_importancias,lista_features,mejor_modelo)
+    return (df_importancias, lista_features, mejor_modelo)
 
 
 def test_fe_pickle_generator(input_path, output_path, col_transformer):
@@ -181,6 +181,10 @@ def feature_engineering(input_path, output_path, test_input_path, test_output_pa
     test_fe_pickle_generator(test_input_path, test_output_path, col_trans)
 
     df_importancias, lista_features, mejor_modelo = feature_selection(df)
-    # df = df[lista_features]
+    df = df.sort_values('timestamp_creacion', ascending=True, ignore_index=True)
+
+    features = ['label', 'accidente', 'cadaver', 'detencion_ciudadana', 'lesionado', 'sismo', 'llamada']
+    features += ['tipo_dia', 'sin_hr', 'cos_hr', 'sin_mes', 'cos_mes']
+    df = df[features]
 
     save_df(df, output_path)

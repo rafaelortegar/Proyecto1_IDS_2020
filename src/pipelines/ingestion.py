@@ -102,15 +102,5 @@ def ingest(input_path, output_path):
     df = ingest_file(input_path)
     df = generate_label(df)
     df = drop_cols(df)
-    #print("Arreglando fechas...")
-    #df = date_transformation('fecha_creacion',df)
-
-    #X_train, X_test, y_train, y_test = train_test_split(etiqueta, features)
-
-    #train = y_train.copy()
-    #train['label'] = X_train
-
-    #test =y_test.copy()
-    #test['label'] = X_test
 
     save_ingestion(df, output_path)
