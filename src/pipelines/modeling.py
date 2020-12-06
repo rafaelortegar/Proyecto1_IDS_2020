@@ -84,23 +84,6 @@ def max_precision(y_label, y_prob):
     return best_precision, max_precision_cut
 
 
-def model_selection_by_precision(models, x_test, y_label):
-    best_estimator = None
-    best_precision = -1
-    best_cut = -1
-    for model in models:
-        estimator = model.best_estimator_
-        y_score = estimator.predict_proba(x_test)[:, 1]
-        precision, cut = max_precision(y_label, y_score)
-
-        if precision > best_precision:
-            best_estimator = estimator
-            best_precision = precision
-            best_cut = cut
-
-    return best_estimator, best_precision, best_cut
-
-
 def precision_at_k(y_labels, y_scores, k):
     threshold_index = int(len(y_scores) * k)
 
@@ -127,6 +110,21 @@ def recall_at_k(y_labels, y_scores, k):
     return metrics.recall_score(y_labels, y_predicted)
 
 
+def model_selection_by_precision_at_k(models, x_test, y_label, k):
+    best_estimator = None
+    best_precision = -1
+    for model in models:
+        estimator = model.best_estimator_
+        y_score = estimator.predict_proba(x_test)[:, 1]
+        precision = precision_at_k(y_label, y_score, k)
+
+        if precision > best_precision:
+            best_estimator = estimator
+            best_precision = precision
+
+    return best_estimator, best_precision
+
+
 def save_models(model, output_path):
     save_df(model, output_path)
 
@@ -141,7 +139,8 @@ def modeling(train_df_path, test_df_path, model_output_path, n_units, ingest_df_
     y_train = df.label
 
     # magic loop para obtener mejores modelos
-    algorithms = ['tree','random_forest', 'logistic_regression']
+    # algorithms = ['tree','random_forest', 'logistic_regression']
+    algorithms = ['random_forest']
     best_models = magic_loop(algorithms, x_train, y_train)
 
     # obteniendo dataset de prueba
