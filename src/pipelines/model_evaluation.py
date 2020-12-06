@@ -1,5 +1,6 @@
 from sklearn.metrics import roc_curve, roc_auc_score, precision_recall_curve
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import metrics
 import os, sys
@@ -9,7 +10,7 @@ from src.utils.utils import load_df, save_df
 from src.pipelines.modeling import precision_at_k, recall_at_k
 
 def load_model(path):
-    load_df(path)
+    return load_df(path)
 
 def generate_roc(y_test, y_scores, predicted_labels):
     print("Generando curva roc...")
@@ -22,7 +23,7 @@ def generate_roc(y_test, y_scores, predicted_labels):
     plt.title("ROC best RF, AUC: {}".format(round(roc_auc_score(y_test, predicted_labels), 3)))
     plt.xlabel("fpr")
     plt.ylabel("tpr")
-    plt.savefig('../../output/metricas/roc.png', dpi=300)
+    plt.savefig('../output/metricas/roc.png', dpi=300)
 
 
 def pr_k_curve(y_labels, y_scores, k_target):
@@ -47,7 +48,7 @@ def pr_k_curve(y_labels, y_scores, k_target):
     plt.title('Curva precision-recall @k')
     plt.legend(bbox_to_anchor=(1.01, 1), loc='upper left', borderaxespad=0)
 
-    plt.savefig('../../output/metricas/precision-recall-curve.png', dpi=300)
+    plt.savefig('../output/metricas/precision-recall-curve.png', dpi=300)
 
     return pr_k
 
@@ -91,7 +92,7 @@ def cut_at_k(y_scores, k):
     return ordered_y_scores[threshold_index]
 
 
-def model_evaluation(test_df_path, ingest_df_path, pr_at_k_path, metrics_df_path, model_output_df_path):
+def model_evaluation(test_df_path, ingest_df_path, pr_at_k_path, metrics_df_path, model_input_path, model_output_df_path, n_units):
 
     # obteniendo dataset de prueba
     df_test = load_df(test_df_path)
@@ -102,7 +103,7 @@ def model_evaluation(test_df_path, ingest_df_path, pr_at_k_path, metrics_df_path
     y_test = df_test.label
 
     # recuperando modelo
-    model = load_model(path)
+    model = load_model(model_input_path)
 
     # obteniendo scores
     y_scores = model.predict_proba(x_test)[:, 1]

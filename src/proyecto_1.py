@@ -6,6 +6,7 @@ from src.pipelines.transformation import transform
 from src.pipelines.feature_engineering import feature_engineering
 from src.pipelines.modeling import modeling
 from src.pipelines.model_evaluation import model_evaluation
+from src.pipelines.bias_fairness import bias_fairness
 
 
 # paths
@@ -32,17 +33,17 @@ fairness_gof_path = '../output/aequitas/fairness_gof_path.pkl'
 NO_AMBULANCIAS = 20
 
 def main():
-    ingest(csv_path,
-           ingestion_pickle_path)
-
-    transform(ingestion_pickle_path,
-              transformation_pickle_path,
-              test_df_pickle_path)
-
-    feature_engineering(transformation_pickle_path,
-                        feature_engineering_pickle_path,
-                        test_df_pickle_path,
-                        test_feature_engineering_pickle_path)
+    # ingest(csv_path,
+    #        ingestion_pickle_path)
+    #
+    # transform(ingestion_pickle_path,
+    #           transformation_pickle_path,
+    #           test_df_pickle_path)
+    #
+    # feature_engineering(transformation_pickle_path,
+    #                     feature_engineering_pickle_path,
+    #                     test_df_pickle_path,
+    #                     test_feature_engineering_pickle_path)
 
     # modeling(train_df_path=feature_engineering_pickle_path,
     #          test_df_path=test_feature_engineering_pickle_path,
@@ -50,21 +51,23 @@ def main():
     #          n_units=NO_AMBULANCIAS,
     #          ingest_df_path=ingestion_pickle_path)
 
-    model_evaluation(test_df_path = test_feature_engineering_pickle_path,
-                     ingest_df_path = ingestion_pickle_path,
-                     pr_at_k_path = precision_recall_at_k_path,
-                     metrics_df_path = model_evaluation_path,
-                     model_output_df_path = model_output_df)
+    # model_evaluation(test_df_path = test_feature_engineering_pickle_path,
+    #                  ingest_df_path = ingestion_pickle_path,
+    #                  pr_at_k_path = precision_recall_at_k_path,
+    #                  metrics_df_path = model_evaluation_path,
+    #                  model_input_path = model_loop_path,
+    #                  model_output_df_path = model_output_df,
+    #                  n_units=NO_AMBULANCIAS)
 
-    # bias_fairness(test_path = test_feature_engineering_pickle_path,
-    #                 model_path = model_loop_path,
-    #                 model_output_df_path = model_output_df,
-    #                 df_group_frecuencias_path = df_group_frecuencias_path,
-    #                 df_group_absolutas_path = df_group_absolutas_path,
-    #                 df_disparidad_limpio_path = df_disparidad_limpio_path,
-    #                 fairness_result_path = fairness_result_path,
-    #                 fairness_gaf_path = fairness_gaf_path,
-    #                 fairness_gof_path = fairness_gof_path)
+    bias_fairness(test_path = test_feature_engineering_pickle_path,
+                test_del_path = test_df_pickle_path,
+                model_input_df_path = model_output_df,
+                df_group_frecuencias_path = df_group_frecuencias_path,
+                df_group_absolutas_path = df_group_absolutas_path,
+                df_disparidad_limpio_path = df_disparidad_limpio_path,
+                fairness_result_path = fairness_result_path,
+                fairness_gaf_path = fairness_gaf_path,
+                fairness_gof_path = fairness_gof_path)
 
 
 
