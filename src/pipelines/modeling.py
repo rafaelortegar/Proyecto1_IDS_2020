@@ -139,8 +139,7 @@ def modeling(train_df_path, test_df_path, model_output_path, n_units, ingest_df_
     y_train = df.label
 
     # magic loop para obtener mejores modelos
-    # algorithms = ['tree','random_forest', 'logistic_regression']
-    algorithms = ['random_forest']
+    algorithms = ['tree','random_forest', 'logistic_regression']
     best_models = magic_loop(algorithms, x_train, y_train)
 
     # obteniendo dataset de prueba
