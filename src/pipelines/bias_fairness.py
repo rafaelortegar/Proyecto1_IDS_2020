@@ -129,11 +129,11 @@ def fairness(bdf, absolute_metrics, bias):
 
     return (fairness_result,fairness_gaf,fairness_gof)
 
-def bias_fairness(test_path, test_del_path, model_input_df_path,
+def bias_fairness(test_del_path, model_input_df_path,
                 df_group_frecuencias_path, df_group_absolutas_path,
                 df_disparidad_limpio_path, fairness_result_path,
                 fairness_gaf_path, fairness_gof_path):
-    df_test = load_df(test_path)
+
     model_output_df = load_df(model_input_df_path)
 
     y_scores = model_output_df['y_score']
@@ -144,11 +144,7 @@ def bias_fairness(test_path, test_del_path, model_input_df_path,
     df['label_value'] = y_test
 
     df_del = load_df(test_del_path)
-    print(df_del.head())
-    print(df_del.shape)
-    df['delegacion'] = df_del['delegacion_inicio']
-    print(df.head())
-    print(df.shape)
+    df['delegacion'] = list(df_del.delegacion_inicio)
 
     df_group_frecuencias, df_group_absolutas, xtab, absolute_metrics = group(df)
     df_disparidad_limpio, bdf, bias_object = bias(df, xtab)
