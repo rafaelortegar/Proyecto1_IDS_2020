@@ -1,11 +1,11 @@
-# Proyecto 1 y 2_IDS_2020
 ![](https://mcdatos.itam.mx/wp-content/uploads/2020/11/ITAM-LOGO.03.jpg)
+# Proyecto 1 y 2_IDS_2020
 
 Repositorio para el primer y segundo proyecto de la materia Introducción a Ciencia de Datos 2020
 
 **Profesor:** M. Sc. Liliana Millán Núñez
 
-**Integrantes del Equipo 9**
+**Equipo 9**
 
 | # | Alumno                      | Clave única | Github        |
 |:-:|:---------------------------:|:-----------:|:-------------:|
@@ -21,11 +21,11 @@ Predecir si una llamada al C5 para reportar un inicidente vial es **Falsa** o no
 Para esto, contamos con los datos de accidentes viales en la CDMX reportados por C5 (Centro de Comando, Control, Cómputo, Comunicaciones y Contacto Ciudadano de la CDMX). En este conjunto se reporta: folio, fecha de creación del reporte, hora de creación del reporte, día de la semana de creación del reporte, fecha de cierre de reporte, hora de cierre de reporte, motivo del incidente dependiendo del tipo de emergencia, alcaldía donde sucedió el incidente, latitud y longitud del incidente, código de cierre del incidente reportado, clasificación del incidente, origen del incidente por tipo, alcaldía en que se dio resolución al incidente o emergencia. El diccionario completo de datos se encuentra en la siguiente [liga de dropbox](https://www.dropbox.com/sh/sj3q1y6gilv6yfv/AABZ7fhJc2xX2jNrGFWgOwu2a/Diccionario%20de%20Datos%20de%20Incidentes%20Viales.xlsx?dl=0).
 
 Los registros que se reciben en el C5 se clasifican internamente por medio de un código de cierre:
-- A = “Afirmativo”: Una unidad de atención a emergencias fue despachada, llegó al lugar de los hechos y confirmó la emergencia reportada
-- N = “Negativo”: Una unidad de atención a emergencias fue despachada, llegó al lugar de los hechos, pero en el sitio del evento nadie confirmo la emergencia ni fue solicitado el apoyo de la unidad
-- I = “Informativo”: Corresponde a solicitudes de información
-- F = “Falso”: El incidente reportado inicialmente fue considerado como falso en el lugar de los hechos.
-- D = “Duplicados”: El incidente reportado se registró en dos o más ocasiones procediendo a mantener un solo reporte como el original. Para el uso e interpretación correctos de la información, debe considerarse:
+- (A) = “Afirmativo”: Una unidad de atención a emergencias fue despachada, llegó al lugar de los hechos y confirmó la emergencia reportada.
+- (N) = “Negativo”: Una unidad de atención a emergencias fue despachada, llegó al lugar de los hechos, pero en el sitio del evento nadie confirmó la emergencia ni fue solicitado el apoyo de la unidad.
+- (I) = “Informativo”: Corresponde a solicitudes de información.
+- (F) = “Falso”: El incidente reportado inicialmente fue considerado como falso en el lugar de los hechos.
+- (D) = “Duplicados”: El incidente reportado se registró en dos o más ocasiones procediendo a mantener un solo reporte como el original. 
 
 Para efectos de este proyecto, se clasificarán los registros antes mencionados de la siguiente manera:
 - `1` cuando el código de cierre es `(F)` o `(N)`.
@@ -46,7 +46,7 @@ Si usted desea reproducir los hallazgos encontrados en este trabajo, lo que tien
 
 2. Descargar el archivo `incidentes-viales-c5.csv` de [esta liga](https://www.dropbox.com/sh/sj3q1y6gilv6yfv/AABZ7wXdP6_NA0lqqpLB3bL9a/incidentes-viales-c5.csv?dl=0) y colocarlo en la carpeta `data`.
 
-3. **Opcional, requiere pyenv:** Genera el ambiente virtual para este proyecto con el comando `pyenv virtualenv 3.7.4 nombre_de_tu_environment`
+3. ***Opcional, requiere pyenv:*** Genera el ambiente virtual para este proyecto con el comando `pyenv virtualenv 3.7.4 nombre_de_tu_environment`
 
 - Activa el ambiente virtual con el siguiente comando: `pyenv activate nombre_de_tu_environment`
   - Instalar ipykernel: `pip install ipykernel`
@@ -58,7 +58,7 @@ Si usted desea reproducir los hallazgos encontrados en este trabajo, lo que tien
 
 6. Ejecute el comando `python proyecto_1.py` y observe los resultados. 
 
-- **Nota**: durante la ejecución del script se levantan varios warnings pero éstos no detienen la ejecución del mismo. Estos warnings se derivan ya que durante el entrenamiento del modelo existen algunas operaciones de división 0/0.
+  - **Nota**: durante la ejecución del script se levantan varios warnings pero éstos no detienen la ejecución del mismo. Estos warnings se derivan ya que durante el entrenamiento del modelo existen algunas operaciones de división 0/0.
 
 
 ## ¿Qué archivos son importantes en este repositorio?
